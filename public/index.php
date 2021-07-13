@@ -24,9 +24,11 @@ $handler->setFilenameFormat('{date}-{filename}', 'Y-m-d');
 $logger->pushHandler($handler);
 
 // Get values from query parameters
-$longLivedToken = filter_input(INPUT_GET, 'long-lived-token', FILTER_SANITIZE_STRING);
+$code           = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_STRING);
 $igAction       = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+$longLivedToken = filter_input(INPUT_GET, 'long-lived-token', FILTER_SANITIZE_STRING);
 
+$logger->info('--------------------------------');
 $logger->info('New action: ' . $igAction);
 
 if(isset($config) && $longLivedToken)
@@ -51,29 +53,64 @@ if(isset($config) && $longLivedToken)
     else {
         $logger->info('Error! An error occurred saving the token');
     }
+
+    return;
+}
+else if($igAction == 'get-media') {
+
+    $logger->info('Start IG get media');
+
+    // Instagram Media class
+    $iGMedia = new IGMedia($config, $longLivedToken);
+    $media = $iGMedia->getMedia(); // stdClass->data
+
+    $logger->info('Found ' . count($media->data) . ' media.');
+
+    $iGToken = new IGToken($config);
+    $result = $iGToken->refreshToken();
+
+    $logger->info('Token ' . ($result ? 'refreshed' : 'not refreshed'));
+
+    // App utilities
+    $utility = new Utility();
+    $result = $utility->filterMedia($media->data, 'media' . DIRECTORY_SEPARATOR);
+
+    $logger->info('Filtered ' . count($result) . ' media.');
+
+    return;
 }
 else {
-    if($igAction == 'get-media')
+    
+    // Authenticate user (OAuth2)
+    if(!empty($code))
     {
-        $logger->info('Start IG get media');
-
-        // Instagram Media class
-        $iGMedia = new IGMedia($config, $longLivedToken);
-        $media = $iGMedia->getMedia(); // stdClass->data
-
-        $logger->info('Found ' . count($media->data) . ' media.');
-
+        // Ready for the login
         $iGToken = new IGToken($config);
-        $result = $iGToken->refreshToken();
+        $instagram = $iGToken->getInstagramBasicDisplayByKeys();
 
-        $logger->info('Token ' . ($result ? 'refreshed' : 'not refreshed'));
+        $logger->info('Code from Instagram: ' . $code);
 
-        // App utilities
-        $utility = new Utility();
-        $result = $utility->filterMedia($media->data, 'media' . DIRECTORY_SEPARATOR);
+        // Get the short lived access token (valid for 1 hour)
+        $token = $instagram->getOAuthToken($code, true);
 
-        $logger->info('Filtered ' . count($result) . ' media.');
+        // Exchange this token for a long lived token (valid for 60 days)
+        $token = $instagram->getLongLivedToken($token, true);
+
+        // Instagram Token class
+        $iGToken->setLongLivedToken($token);
+
+        $result = $iGToken->encryptNewToken();
+
+        $logger->info('Encrypted new token successfully.');
+        
+        echo "<a href='?action=get-media'>Get media</a>";
+
+        return;
     }
 }
 
-$logger->info('--------------------------------');
+// Ready for the login and initialize the class
+$iGToken = new IGToken($config);
+$instagram = $iGToken->getInstagramBasicDisplayByKeys();
+
+echo "<a href='{$instagram->getLoginUrl()}'>Instagram Login</a>";

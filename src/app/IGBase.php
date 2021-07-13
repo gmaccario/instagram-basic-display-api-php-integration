@@ -15,7 +15,16 @@ class IGBase
         $this->config = $config;
     }
     
-    protected function getInstagramBasicDisplay()
+    public function getInstagramBasicDisplayByKeys()
+    {
+        return new InstagramBasicDisplay([
+            'appId'         => $this->config['appId'],
+            'appSecret'     => $this->config['appSecret'],
+            'redirectUri'   => $this->config['redirectUri'],
+        ]);
+    }
+
+    protected function getInstagramBasicDisplayByToken()
     {
         if(!\file_exists($this->config['token_file']))
         {

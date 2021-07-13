@@ -11,7 +11,7 @@ class IGMedia extends IGBase
 
     public function getMedia()
     {
-        $instagram = $this->getInstagramBasicDisplay();
+        $instagram = $this->getInstagramBasicDisplayByToken();
 
         return $instagram->getUserMedia('me', $this->config['limit_per_page']);
     }
