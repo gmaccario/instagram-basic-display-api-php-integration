@@ -1,6 +1,6 @@
 <?php 
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use App\Utility;
 use App\IGMedia;
@@ -8,7 +8,7 @@ use App\IGToken;
 use Monolog\Logger;
 use Monolog\Handler\RotatingFileHandler;
 
-$config = include 'config' . DIRECTORY_SEPARATOR . 'config.php';
+$config = include '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.php';
 
 if($config['debug'])
 {
@@ -19,11 +19,11 @@ if($config['debug'])
 
 // Add log handler
 $logger     = new Logger('ig-integration');
-$handler    = new RotatingFileHandler('logs/ig-log.log', 0, Logger::INFO, true, 0664);
+$handler    = new RotatingFileHandler('../logs/ig-log.log', 0, Logger::INFO, true, 0664);
 $handler->setFilenameFormat('{date}-{filename}', 'Y-m-d');
 $logger->pushHandler($handler);
 
-// Get long live token from query parameters
+// Get values from query parameters
 $longLivedToken = filter_input(INPUT_GET, 'long-lived-token', FILTER_SANITIZE_STRING);
 $igAction       = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
@@ -46,7 +46,7 @@ if(isset($config) && $longLivedToken)
 
     if($result !== false)
     {
-        $logger->info('Success! Please check your new token in token.json');
+        $logger->info('Success! Please check your new token in ./config/token.json');
     }
     else {
         $logger->info('Error! An error occurred saving the token');
@@ -70,7 +70,9 @@ else {
 
         // App utilities
         $utility = new Utility();
-        $utility->filterMedia($media->data, 'media' . DIRECTORY_SEPARATOR);
+        $result = $utility->filterMedia($media->data, 'media' . DIRECTORY_SEPARATOR);
+
+        $logger->info('Filtered ' . count($result) . ' media.');
     }
 }
 

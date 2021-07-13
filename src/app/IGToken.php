@@ -39,8 +39,6 @@ class IGToken extends IGBase
 
     public function refreshToken()
     {
-        $instagram = $this->getInstagramBasicDisplay();
-
         // Get long lived token from config json
         $tokenInfo = json_decode(file_get_contents($this->config['token_file']), true);
 
@@ -62,6 +60,7 @@ class IGToken extends IGBase
         // Note for thest purpose: Carbon::now()->addMonths(3)->timestamp INSTEAD OF Carbon::now()->timestamp
         if(Carbon::now()->timestamp > $oneWeekBeforeExpirationTimestamp)
         {
+            $instagram = $this->getInstagramBasicDisplay();
             $oAuthTokenAndExpiresDate = $instagram->refreshToken($decryptedToken);
 
             // $oAuthTokenAndExpiresDate->access_token;

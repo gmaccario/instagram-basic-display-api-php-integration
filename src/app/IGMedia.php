@@ -2,9 +2,6 @@
 
 namespace App;
 
-use Lablnet\Encryption;
-use EspressoDev\InstagramBasicDisplay\InstagramBasicDisplay;
-
 class IGMedia extends IGBase
 {
     public function __construct(array $config)

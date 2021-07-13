@@ -1,3 +1,4 @@
 logs/*
-config/token.json
 vendor/*
+config/token.json
+public/media/*

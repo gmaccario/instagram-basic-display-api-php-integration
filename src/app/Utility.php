@@ -46,6 +46,13 @@ class Utility
             }
         }
 
+        // Collect info
+        if($action == 'save-media')
+        {
+            file_put_contents($targetDir . 'info.json', json_encode($mediaOutput));
+        }
+
+
         return $mediaOutput;
     }
 

@@ -10,5 +10,5 @@ return array(
     ),
 
     'debug'         => true,
-    'token_file'    =>'config' . DIRECTORY_SEPARATOR . 'token.json',
+    'token_file'    => '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'token.json',
 );
