@@ -19,15 +19,16 @@ Vendor folder is not included in the repo, so after cloning the project you must
 ## How to
 1. Go to the **Create FB app** section down below in this README, and complete all the steps
 2. Copy the *Instagram App ID* and the *Instagram App Secret* (Facebook for Developers app page)
-3. Open *./config/config.php* and paste then the appId, the appSecret and the redirectUri
-4. Open the index page into your browser (or your custom url if you're working in a subfolder):
+3. Open *./config/config.php* and paste then the *appId*, the *appSecret* and the *redirectUri*. 
+4. Also set up a random string as *secretKey* (e.g. 7h3S3cr37H1s70ry0f1GIn73gra710n)
+5. Open the index page into your browser (or your custom url if you're working in a subfolder):
 [http://localhost/](http://localhost/)
-5. Go ahead and make the login through Instagram
-6. You will be redirected to the Valid OAuth Redirect URIs that you set up before
-7. Click Get Media, or click this link:
+6. Go ahead and make the login through Instagram
+7. You will be redirected to the Valid OAuth Redirect URIs that you set up before
+8. Click Get Media, or click this link:
 [http://localhost/?action=get-media](http://localhost/?action=get-media)
-8. Open the log under *./logs* and check if you see the messages
-9. Check the media files and the info files generated under *./media*
+9. Open the log under *./logs* and check if you see the messages
+10. Check the media files and the info files generated under *./media*
 
 ## Create FB app
 1. Go to this page https://developers.facebook.com/apps/
