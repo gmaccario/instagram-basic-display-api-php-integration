@@ -1,7 +1,7 @@
 <?php 
 
 return array(
-    'secretKey'     => '7h3S3cr37H1s70ry0f1GIn73gra710n', // used to encrypt the token
+    'secretKey'     => '', // used to encrypt the token, you must create your custom (random) string
     'appId'         => '',
     'appSecret'     => '',
     'redirectUri'   => '',
