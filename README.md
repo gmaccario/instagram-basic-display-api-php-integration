@@ -35,7 +35,7 @@ Vendor folder is not included in the repo, so after cloning the project you must
 2. Click "Create App" button
 3. Choose the right app type for you (Consumer for example), then click Continue
 4. Fill the values for: App Display Name, App Contact Email, App Purpose, then click on Save
-5. In "Add Products to Your App" choose "Instagram Graph API"
+5. In "Add Products to Your App" choose "Instagram Basic Display"
 6. Under Settings, click Add Platform and Select the right Platform for you
 7. Set up Privacy Policy URL, User Data Deletion URL, Terms of Service URL and the Site URL
 8. Open Instagram Basic API -> Basic Display
@@ -50,3 +50,7 @@ Vendor folder is not included in the repo, so after cloning the project you must
 17. You are able to test your application now. When you're ready, swith the App Mode to *Live*. 
 
 Note: in order to complete step #17, in your *Facebook for Developers app page* you must enter a valid *Privacy Policy URL* for the Facebook app, the app's icon, the App Purpose use and the category.
+
+## Troubleshooting
+1. "Invalid platform app" error using Instagram Basic Display API: you are using the Facebook App ID and App Secret instead of the Instagram App ID & App Secret. You must go to the "Instagram Basic Display" section on the Facebook developers site then scroll down until you find the Instagram App ID & Secret.
+2. "Invalid redirect_uri": in your Facebook Developer Console, under Instagram Basic Display , you just enter the Valid OAuth Redirect URIs.
