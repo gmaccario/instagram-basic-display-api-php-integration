@@ -1,5 +1,10 @@
 # Instagram Basic Display API - PHP Integration
 
+## Important ⚠️
+This plugin has been *ARCHIVED* as of July 2025 due to Instagram API changes introduced in December 2024. The Instagram Basic Display API no longer supports personal account feeds reliably. We recommend switching to an alternative plugin that supports the Instagram Graph API for Business or Creator accounts.
+
+---
+
 ## Description
 This application allows you to download the media from your Instagram profile, through the **Instagram Basic Display API**. The authentication is based on a [Long Live Token](https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens/) that you can get using the application itself. The media files will be saved under *./media* by default and the media information will be saved in *./media/info.json*. Starting from it, you can modify the script and classes in order to make an integration between Instagram and you website (WordPress or not). For example you want to populate the gallery on your website based on your Instagram feed. 
 
